@@ -18,6 +18,11 @@ function PizzaList({ name, data, onCreate, onUpdate, onDelete, error }) {
         }
     }, [editingId, data]);
 
+    const resetForm = () => {
+        setFormData({ id: '', name: '', description: '' });
+        setEditingId(null);
+    }
+
     const handleFormChange = (event) => {
 
         console.log(`handleFormChange: ${event.target.name} ${event.target.value}`)
@@ -41,8 +46,7 @@ function PizzaList({ name, data, onCreate, onUpdate, onDelete, error }) {
             onCreate(formData);
         }
 
-        setFormData({ id: '', name: '', description: '' });
-        setEditingId(null);
+        resetForm();
     };
 
     const handleEdit = (id) => {
@@ -50,11 +54,11 @@ function PizzaList({ name, data, onCreate, onUpdate, onDelete, error }) {
     };
 
     const handleCancel = () => {
-        setFormData({ id: '', name: '', description: '' });
-        setEditingId(null);
+        resetForm();
     };
 
     const handleDelete = (id) => {
+        resetForm();
         onDelete(id);
     };
 
@@ -74,7 +78,7 @@ function PizzaList({ name, data, onCreate, onUpdate, onDelete, error }) {
                             <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(item.id)}>
                                 <Edit />
                             </IconButton>
-                            <IconButton edge="end" aria-label="delete" onClick={() => onDelete(item.id)}>
+                            <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(item.id)}>
                                 <Delete />
                             </IconButton>
                         </>
